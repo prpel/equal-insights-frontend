@@ -1,0 +1,101 @@
+firstname,surname,age,gender,pay grade,job title,academic,full time,ethnicity,disability,sexual orientation
+Rolando,Jones,24,Man,8,Clerk,True,True,Black,Long-standing illness or health condition,Hetrosexual
+Justin,Frey,21,Man,12,Clerk,False,True,Mixed,Physical impairment or mobility issues,Hetrosexual
+Wendy,Maleh,30,Other,12,Doctor,True,False,Asian,Mental Health Condition,Gay
+Valerie,Day,21,Other,4,Teacher,True,False,White,Mental Health Condition,Other
+Betsy,Watson,31,Woman,4,Nurse,False,False,White,Specific Learning Difficulty,Hetrosexual
+Pam,Mcneill,43,Woman,11,Clerk,True,True,Black,Long-standing illness or health condition,Gay
+Sandra,Braxton,69,Woman,12,Salesperson,True,False,Mixed,Specific Learning Difficulty,Hetrosexual
+Kirsten,Mccoy,35,Other,5,Artist,False,True,Asian,Mental Health Condition,Gay
+Patricia,Springle,30,Woman,10,Teacher,True,False,Other,Mental Health Condition,Gay
+Valorie,Wood,48,Woman,4,Chef,False,False,Mixed,Deaf or serious hearing impairment,Hetrosexual
+Patricia,Wamsley,38,Other,2,Salesperson,True,True,Unknown,Mental Health Condition,Hetrosexual
+Charlie,Lee,21,Man,5,Programmer,True,True,Mixed,Long-standing illness or health condition,Hetrosexual
+Timothy,Rossi,59,Man,7,Programmer,False,False,Mixed,Deaf or serious hearing impairment,Hetrosexual
+Ashleigh,Bourgoin,44,Woman,10,Doctor,True,False,Other,Mental Health Condition,Hetrosexual
+Teresa,Rivers,53,Other,4,Clerk,True,False,Unknown,Deaf or serious hearing impairment,Bisexual
+Betty,Shamblin,36,Woman,12,Chef,False,True,Mixed,Deaf or serious hearing impairment,Hetrosexual
+Cecile,Gonzalez,24,Woman,7,Engineer,True,True,Other,Physical impairment or mobility issues,Bisexual
+David,Mishar,20,Man,2,Nurse,True,False,Asian,Physical impairment or mobility issues,Bisexual
+Vera,White,22,Other,5,Salesperson,True,True,Mixed,Deaf or serious hearing impairment,Other
+Ora,Gonzalez,52,Woman,6,Teacher,True,False,Mixed,Mental Health Condition,Other
+Maryanne,Hulsey,65,Other,3,Artist,True,True,Black,Deaf or serious hearing impairment,Bisexual
+Devin,Eury,20,Man,7,Programmer,False,True,Mixed,Mental Health Condition,Bisexual
+Randy,Edwards,52,Man,12,Nurse,True,True,Unknown,Physical impairment or mobility issues,Hetrosexual
+Anne,Ziebarth,18,Woman,8,Teacher,True,False,Asian,Long-standing illness or health condition,Gay
+Aleshia,Bowlin,46,Other,6,Salesperson,True,True,Unknown,Deaf or serious hearing impairment,Other
+Michael,Hernandez,43,Man,2,Programmer,False,True,Asian,Specific Learning Difficulty,Other
+Tara,Lawson,19,Woman,3,Artist,True,False,White,Long-standing illness or health condition,Other
+Ruth,Mcintyre,38,Other,9,Engineer,True,False,White,Deaf or serious hearing impairment,Bisexual
+Vernice,Roy,70,Other,8,Nurse,False,True,White,Long-standing illness or health condition,Other
+Joanne,Weeks,64,Woman,8,Driver,True,True,Asian,Deaf or serious hearing impairment,Hetrosexual
+Rosie,Holmes,31,Woman,3,Nurse,False,False,Black,Deaf or serious hearing impairment,Bisexual
+Robin,Hurst,62,Other,7,Artist,True,False,Asian,Specific Learning Difficulty,Hetrosexual
+Janice,Mahon,55,Other,4,Clerk,False,False,White,Specific Learning Difficulty,Hetrosexual
+Sofia,Carlos,47,Other,5,Doctor,False,False,Asian,Specific Learning Difficulty,Gay
+Amanda,Dreyer,43,Woman,4,Clerk,True,True,Asian,Long-standing illness or health condition,Hetrosexual
+Robert,Rucker,30,Man,2,Programmer,False,False,Other,Specific Learning Difficulty,Other
+Joe,Glassman,57,Man,11,Engineer,True,True,White,Mental Health Condition,Hetrosexual
+Meagan,Holton,38,Woman,6,Salesperson,True,True,White,Physical impairment or mobility issues,Gay
+Samuel,Brown,42,Man,7,Driver,False,False,White,Deaf or serious hearing impairment,Gay
+Laurie,Harris,28,Other,5,Driver,False,True,Mixed,Mental Health Condition,Other
+James,Mann,39,Man,3,Teacher,True,True,Mixed,Long-standing illness or health condition,Other
+Carole,Cousins,18,Woman,6,Programmer,True,False,Mixed,Mental Health Condition,Hetrosexual
+Jeanette,Starner,45,Other,7,Chef,True,False,Black,Specific Learning Difficulty,Gay
+Robert,Weaver,53,Man,8,Driver,False,True,Unknown,Long-standing illness or health condition,Gay
+Gregorio,Peyatt,40,Man,12,Artist,True,False,Black,Mental Health Condition,Hetrosexual
+Mark,Barrett,27,Man,7,Nurse,False,True,White,Specific Learning Difficulty,Hetrosexual
+Zelma,Beard,26,Other,8,Clerk,True,False,Unknown,Specific Learning Difficulty,Hetrosexual
+Ernest,Workman,52,Man,10,Driver,True,False,Other,Long-standing illness or health condition,Other
+Bernice,Hill,59,Woman,9,Salesperson,False,False,White,Mental Health Condition,Gay
+Griselda,Eagle,56,Other,8,Driver,True,False,Other,Specific Learning Difficulty,Other
+Carlos,Morissette,20,Man,2,Chef,False,True,White,Mental Health Condition,Gay
+Stephanie,Morin,69,Other,7,Salesperson,False,False,Other,Mental Health Condition,Gay
+Yvonne,Johnson,66,Woman,11,Programmer,False,False,Mixed,Specific Learning Difficulty,Gay
+Robert,Bradley,19,Man,11,Driver,True,False,Other,Mental Health Condition,Hetrosexual
+Wanda,Morgan,43,Other,12,Artist,False,True,Asian,Long-standing illness or health condition,Hetrosexual
+Lynette,Brazil,63,Woman,5,Chef,True,False,Unknown,Long-standing illness or health condition,Other
+Wilma,Kuhnle,61,Woman,3,Driver,False,False,Asian,Deaf or serious hearing impairment,Bisexual
+Edward,Bradshaw,43,Man,6,Clerk,True,False,Black,Long-standing illness or health condition,Gay
+Holly,List,44,Other,10,Driver,False,True,Other,Mental Health Condition,Hetrosexual
+Jermaine,Sanchez,18,Man,2,Driver,True,False,Other,Deaf or serious hearing impairment,Other
+Sandra,Darnell,19,Other,10,Doctor,True,True,Mixed,Mental Health Condition,Other
+Karen,Eng,36,Other,8,Clerk,True,False,Asian,Long-standing illness or health condition,Other
+Elvia,Rusnak,48,Other,11,Chef,False,False,Black,Deaf or serious hearing impairment,Gay
+Jessica,Patterson,20,Woman,10,Driver,False,True,Other,Mental Health Condition,Other
+Delia,Balch,43,Other,6,Programmer,True,False,Black,Physical impairment or mobility issues,Other
+Mary,Pavao,69,Other,8,Programmer,True,True,Unknown,Specific Learning Difficulty,Bisexual
+Sarah,Elkins,29,Other,12,Nurse,False,True,Mixed,Physical impairment or mobility issues,Hetrosexual
+Sharon,Martinez,24,Woman,5,Teacher,True,True,Unknown,Deaf or serious hearing impairment,Hetrosexual
+Roger,Colella,66,Man,12,Programmer,True,False,Other,Mental Health Condition,Gay
+Susan,Mauricio,41,Other,11,Engineer,True,False,Asian,Mental Health Condition,Bisexual
+Wanda,Holley,52,Other,3,Artist,True,True,Unknown,Mental Health Condition,Other
+James,White,26,Man,5,Chef,True,False,Other,Mental Health Condition,Other
+Krista,Kubiszewski,65,Woman,7,Driver,True,True,Unknown,Mental Health Condition,Bisexual
+Kathy,Hledik,27,Other,2,Salesperson,True,False,White,Deaf or serious hearing impairment,Bisexual
+Russell,Goodwin,63,Man,3,Artist,True,True,Mixed,Specific Learning Difficulty,Bisexual
+Eva,Reed,42,Woman,5,Programmer,False,False,White,Physical impairment or mobility issues,Bisexual
+Judith,Hinz,35,Other,12,Doctor,True,False,Asian,Physical impairment or mobility issues,Bisexual
+Tamara,Lewis,64,Other,5,Nurse,True,False,Mixed,Specific Learning Difficulty,Gay
+Mark,Pearsall,50,Man,7,Doctor,False,True,Mixed,Long-standing illness or health condition,Other
+Shauna,Fisher,18,Woman,11,Nurse,False,True,Mixed,Deaf or serious hearing impairment,Hetrosexual
+John,Sykes,56,Man,10,Driver,False,True,Unknown,Specific Learning Difficulty,Other
+Patty,Mcpartland,70,Woman,10,Salesperson,False,True,White,Specific Learning Difficulty,Gay
+Laura,Halvorson,44,Woman,4,Teacher,False,True,Unknown,Specific Learning Difficulty,Bisexual
+Beverly,Evans,25,Woman,8,Salesperson,True,True,Black,Deaf or serious hearing impairment,Hetrosexual
+Deeanna,Lipscomb,23,Woman,3,Artist,True,True,Unknown,Deaf or serious hearing impairment,Gay
+John,Shaw,19,Man,11,Clerk,False,False,Asian,Long-standing illness or health condition,Bisexual
+Virginia,Barnes,37,Other,4,Doctor,False,True,White,Deaf or serious hearing impairment,Bisexual
+Michael,Adams,67,Man,2,Nurse,False,True,Unknown,Physical impairment or mobility issues,Gay
+Pamela,Turner,37,Other,12,Chef,True,False,Other,Deaf or serious hearing impairment,Gay
+Joshua,Herd,60,Man,12,Salesperson,False,False,Black,Specific Learning Difficulty,Other
+Denise,Brown,70,Other,3,Teacher,False,True,Unknown,Specific Learning Difficulty,Gay
+Isabel,Garcia,18,Woman,4,Clerk,True,True,Black,Mental Health Condition,Bisexual
+Crystal,Schinke,49,Woman,3,Nurse,False,True,Asian,Deaf or serious hearing impairment,Gay
+Cristy,Blanchard,67,Other,6,Driver,True,True,Mixed,Deaf or serious hearing impairment,Other
+Mari,Legg,45,Other,8,Chef,True,False,Black,Long-standing illness or health condition,Gay
+Linda,Levings,26,Woman,4,Nurse,True,True,Asian,Mental Health Condition,Other
+Annie,Cager,65,Other,3,Doctor,True,False,Unknown,Mental Health Condition,Bisexual
+Carol,Trinidad,45,Woman,6,Programmer,True,True,White,Mental Health Condition,Gay
+Louis,Brown,30,Man,6,Programmer,True,True,Other,Long-standing illness or health condition,Other
+Mary,Clarke,22,Other,2,Salesperson,False,False,Mixed,Long-standing illness or health condition,Other

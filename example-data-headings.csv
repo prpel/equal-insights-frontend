@@ -1,0 +1,12 @@
+﻿firstname,surname,age,gender,pay grade,job title,academic,full time,ethnicity,disability,sexual orientation
+,,,Man,2,Lecuturer,TRUE,TRUE,Black,Specific Learning Difficulty,Hetrosexual
+,,,Woman,3,Seanior Lecturer,FALSE,FALSE,Asian,Long-standing illness or health condition,Bisexual
+,,,Other,4,Administrator,,,Mixed,Mental Health Condition,Gay
+,,,,5,,,,Other,Physical impairment or mobility issues,Other
+,,,,6,,,,Unknown,Deaf or serious hearing impairment,
+,,,,7,,,,White,,
+,,,,8,,,,,,
+,,,,9,,,,,,
+,,,,10,,,,,,
+,,,,11,,,,,,
+,,,,12,,,,,,
