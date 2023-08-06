@@ -1,8 +1,17 @@
-<script>
+<script lang="ts">
+	import Captcha from '$lib/Captcha.svelte';
+
+	let verified = false;
+
+	function handleSubmit(event: Event) {
+		event.preventDefault();
+		console.log(verified);
+	}
+
 	export const prerender = true;
 </script>
 
-<form class="w-full" action="/upload" method="post" enctype="multipart/form-data">
+<form class="w-full" on:submit={handleSubmit} enctype="multipart/form-data">
 	<h2 class="text-gray-900 text-lg font-medium title-font mb-5">Data Upload</h2>
 
 	<div class="relative mb-4">
@@ -65,10 +74,13 @@
 		</label>
 	</div>
 
-	<div class="h-captcha" data-sitekey="ac2547b4-02c6-4ee4-944a-a48d2cec7a8b" />
+	<div class="w-full my-2 mx-auto">
+		<Captcha bind:captchaCompleted={verified} />
+	</div>
 
 	<button
-		class="text-white bg-[#a679e0] border-0 py-2 px-8 focus:outline-none hover:bg-[#4ec2c2] rounded text-lg"
+		class="text-white bg-[#a679e0] border-0 py-2 px-8 w-full focus:outline-none hover:bg-[#4ec2c2] rounded text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+		disabled={!verified}
 		>Get Analysis</button
 	>
 </form>
