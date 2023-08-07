@@ -1,25 +1,70 @@
 <script lang="ts">
-	import Captcha from '$lib/Captcha.svelte';
+	import Captcha from "./Captcha.svelte";
+	import { getBrowserFingerprint } from "$lib/fingerprint";
+	import type { SubmitFunction } from '@sveltejs/kit';
+	import { enhance } from '$app/forms';
+	import type { UploadFailInfo } from '$lib/types';
+	import { getClientIpAddress, readAsText } from '$lib/helpers';
 
-	let verified = false;
+	let captchaId = "";
+	let captchaResult = "";
+	let file = "";
+	let formFailure: UploadFailInfo | null = null;
+	
+	const handler: SubmitFunction = async (event) => {
+		// Add missing parameter to the form data
+		event.formData.append('browserId', (await getBrowserFingerprint()));
+		event.formData.append('captchaId', captchaId);
+		event.formData.append('ipAddress', (await getClientIpAddress()));
 
-	function handleSubmit(event: Event) {
-		event.preventDefault();
-		console.log(verified);
-	}
+		// Parse the csv file and send this up as a string
+		let file = event.formData.get('file');
+		let contents = await readAsText(file as Blob);
+  		event.formData.append('fileStr', contents);
 
-	export const prerender = true;
+		return ({ update, result }) => {
+            if (result.type === 'success') {
+				formFailure = null;
+                result.data
+			} else if (result.type === 'redirect') {
+				location.href = result.location;
+            } else {
+				formFailure = (result as any).data as UploadFailInfo;
+
+				if (formFailure.fieldWithError === "captchaResult")
+					captchaResult = "";
+
+				if (formFailure.fieldWithError === "file")
+					captchaId = "";
+
+				console.log(formFailure);
+			}
+			update();
+		};
+	};
+
+	export const prerender = false;
 </script>
 
-<form class="w-full" on:submit={handleSubmit} enctype="multipart/form-data">
+<form
+	method="POST"
+	class="w-full"
+	enctype="multipart/form-data"
+	use:enhance={handler}
+>
 	<h2 class="text-gray-900 text-lg font-medium title-font mb-5">Data Upload</h2>
 
+	{#if formFailure}
+		<p class="text-red-500">There was an error with your submission: {formFailure.failReason}.</p>
+	{/if}
+
 	<div class="relative mb-4">
-		<label for="full-name" class="leading-7 text-sm text-gray-600">Full Name</label>
+		<label for="fullname" class="leading-7 text-sm text-gray-600">Full Name</label>
 		<input
 			type="text"
-			id="full-name"
-			name="full-name"
+			id="fullname"
+			name="fullname"
+			required
 			class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
 		/>
 	</div>
@@ -30,6 +75,7 @@
 			type="email"
 			id="email"
 			name="email"
+			required
 			class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
 		/>
 	</div>
@@ -40,47 +86,31 @@
 			type="text"
 			id="organisation"
 			name="organisation"
+			required
 			class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
 		/>
 	</div>
 
-	<div class="flex items-center justify-center w-full pb-4">
-		<label
-			for="dropzone-file"
-			class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-		>
-			<div class="flex flex-col items-center justify-center pt-5 pb-6">
-				<svg
-					class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-					aria-hidden="true"
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 20 16"
-				>
-					<path
-						stroke="currentColor"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-					/>
-				</svg>
-				<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-					<span class="font-semibold">Click to upload</span> or drag and drop
-				</p>
-				<p class="text-xs text-gray-500 dark:text-gray-400">CSV, XLSX, XLS</p>
-			</div>
-			<input id="dropzone-file" type="file" class="hidden" />
-		</label>
+	<!-- Add an input where a user can upload a csv or xlsx file -->
+	<div class="relative mb-4">
+		<label for="file" class="leading-7 text-sm text-gray-600">Upload File</label>
+		<input
+			type="file"
+			id="file"
+			name="file"
+			value={file ?? ""}
+			required
+			accept=".csv, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+			class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+		/>
 	</div>
 
-	<div class="w-full my-2 mx-auto">
-		<Captcha bind:captchaCompleted={verified} />
+	<div class="relative mb-4">
+		<Captcha bind:captchaResult={captchaResult} bind:captchaId={captchaId} serverUrl="http://localhost:7071" />
 	</div>
 
 	<button
-		class="text-white bg-[#a679e0] border-0 py-2 px-8 w-full focus:outline-none hover:bg-[#4ec2c2] rounded text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-		disabled={!verified}
+		class="text-white bg-[#a679e0] border-0 py-2 px-8 w-full focus:outline-none hover:bg-[#4ec2c2] rounded text-lg"
 		>Get Analysis</button
 	>
 </form>
