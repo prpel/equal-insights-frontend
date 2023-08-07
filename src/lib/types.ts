@@ -17,11 +17,6 @@ export type UploadFormData = {
 }
 
 export type UploadFailInfo = {
-    fullname: string;
-    email: string;
-    organisation: string;
-    captchaResult: string;
-    filename: string;
     fieldWithError: string;
     failReason: string;
 }

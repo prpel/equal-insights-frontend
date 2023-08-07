@@ -1,56 +1,142 @@
 <script lang="ts">
 	import Captcha from "./Captcha.svelte";
 	import { getBrowserFingerprint } from "$lib/fingerprint";
-	import type { SubmitFunction } from '@sveltejs/kit';
-	import { enhance } from '$app/forms';
-	import type { UploadFailInfo } from '$lib/types';
+	import type { UploadFailInfo, UploadFormData, ValidateResponse } from '$lib/types';
 	import { getClientIpAddress, readAsText } from '$lib/helpers';
+	import { handleUpload, validateCaptcha, validateFileHeaders } from '$lib/uploader';
+	import ProgressListItem from "./ProgressListItem.svelte";
 
 	let captchaId = "";
 	let captchaResult = "";
 	let file = "";
 	let formFailure: UploadFailInfo | null = null;
+	let uploading = false;
+
+	let captchaValidated = false;
+	let fileValidated = false;
+	let formUploaded = false;
+
+	function resetProgress() {
+		captchaValidated = false;
+		fileValidated = false;
+		formUploaded = false;
+	}
 	
-	const handler: SubmitFunction = async (event) => {
+	async function handleSubmit(event: Event) {
+		event.preventDefault();
+		uploading = true;
+
+		const form = event.target as HTMLFormElement;
+		const rawData = new FormData(form);
+
 		// Add missing parameter to the form data
-		event.formData.append('browserId', (await getBrowserFingerprint()));
-		event.formData.append('captchaId', captchaId);
-		event.formData.append('ipAddress', (await getClientIpAddress()));
+		rawData.append('browserId', (await getBrowserFingerprint()));
+		rawData.append('captchaId', captchaId);
+		rawData.append('ipAddress', (await getClientIpAddress()));
 
 		// Parse the csv file and send this up as a string
-		let file = event.formData.get('file');
+		let file = rawData.get('file');
 		let contents = await readAsText(file as Blob);
-  		event.formData.append('fileStr', contents);
+		rawData.append('fileStr', contents);
 
-		return ({ update, result }) => {
-            if (result.type === 'success') {
-				formFailure = null;
-                result.data
-			} else if (result.type === 'redirect') {
-				location.href = result.location;
-            } else {
-				formFailure = (result as any).data as UploadFailInfo;
-
-				if (formFailure.fieldWithError === "captchaResult")
-					captchaResult = "";
-
-				if (formFailure.fieldWithError === "file")
-					captchaId = "";
-
-				console.log(formFailure);
-			}
-			update();
+		// Convert the form data into an internal format
+		let formData: UploadFormData = {
+			fileStr: rawData.get("fileStr") as string,
+			filename: rawData.get("file")?.toString() as string,
+			captchaResult: parseInt(rawData.get("captchaResult") as string),
+			captchaId: rawData.get("captchaId") as string,
+			fullname:rawData.get("fullname") as string,
+			email: rawData.get("email") as string,
+			organisation: rawData.get("organisation") as string,
+			browserId: rawData.get("browserId") as string,
+			ipAddress: rawData.get("ipAddress") as string,
 		};
-	};
+
+		// First validate the captcha
+		let validateResponse: ValidateResponse;
+		try {			
+			validateResponse = await validateCaptcha({
+				captchaId: formData.captchaId,
+				captchaResult: formData.captchaResult,
+				browserFingerprintHash: formData.browserId,
+			});
+		} catch (error) {
+			formFailure = {
+				fieldWithError: "captchaResult",
+				failReason: "Captcha validation failed, try again",
+			}
+			captchaResult = "";
+			uploading = false;
+			resetProgress();
+			return;
+		}
+		captchaValidated = true;
+
+		// Now validate the file
+		try {
+			validateFileHeaders(formData.fileStr);
+		} catch (error) {
+			formFailure = {
+				fieldWithError: "file",
+				failReason: "File validation failed, try a different file",
+			}
+			file = "";
+			uploading = false;
+			resetProgress();
+			return;
+		}
+		fileValidated = true;
+
+		// Finally, upload the form
+		try {
+			let analysisUrl = await handleUpload(formData, validateResponse);
+			formUploaded = true;
+			location.href = analysisUrl;
+			return;
+		} catch (error) {
+			formFailure = {
+				fieldWithError: "upload",
+				failReason: "Something went wrong with the upload, try again later",
+			}
+			uploading = false;
+			resetProgress();
+			return;
+		}
+	}
 
 	export const prerender = false;
 </script>
 
+{#if uploading}
+<div class="w-full mb-4">
+	<h2 class="mb-2 text-lg font-semibold text-gray-900 dark:text-white">Generating analysis:</h2>
+	<ul class="max-w-md space-y-2 text-gray-500 list-inside dark:text-gray-400">
+		<ProgressListItem
+			loadingText="Making sure you're not a robot 🤖"
+			finishedText="Captcha validated"
+			loading={!captchaValidated}
+			waiting={false}
+		/>
+		<ProgressListItem
+			loadingText="Checking your file looks correct 👀"
+			finishedText="File validated"
+			loading={!fileValidated}
+			waiting={!captchaValidated}
+		/>
+		<ProgressListItem
+			loadingText="Sending your data off for analysis 🚀"
+			finishedText="Form uploaded"
+			loading={!formUploaded}
+			waiting={!fileValidated}
+		/>
+	</ul>
+</div>
+{:else}
 <form
 	method="POST"
 	class="w-full"
 	enctype="multipart/form-data"
-	use:enhance={handler}
+	on:submit|preventDefault={handleSubmit}
 >
 	<h2 class="text-gray-900 text-lg font-medium title-font mb-5">Data Upload</h2>
 
@@ -114,3 +200,4 @@
 		>Get Analysis</button
 	>
 </form>
+{/if}
