@@ -1,33 +1,59 @@
-<script lang="ts">
+<script>
+	/**
+	 * @module CaptchaForm
+	 */
+
 	import Captcha from "./Captcha.svelte";
 	import { getBrowserFingerprint } from "$lib/fingerprint";
-	import type { UploadFailInfo, UploadFormData, ValidateResponse } from '$lib/types';
 	import { getClientIpAddress, readAsText } from '$lib/helpers';
 	import { handleUpload, validateCaptcha, validateFileHeaders } from '$lib/uploader';
 	import ProgressListItem from "./ProgressListItem.svelte";
 
+	/** @type {string} */
 	let captchaId = "";
+
+	/** @type {string} */
 	let captchaResult = "";
+
+	/** @type {string} */
 	let file = "";
-	let formFailure: UploadFailInfo | null = null;
+
+	/** @type {UploadFailInfo | null} */
+	let formFailure = null;
+
+	/** @type {boolean} */
 	let uploading = false;
 
+	/** @type {boolean} */
 	let captchaValidated = false;
+
+	/** @type {boolean} */
 	let fileValidated = false;
+
+	/** @type {boolean} */
 	let formUploaded = false;
 
+	/**
+	 * Resets the progress flags.
+	 */
 	function resetProgress() {
 		captchaValidated = false;
 		fileValidated = false;
 		formUploaded = false;
 	}
 	
-	async function handleSubmit(event: Event) {
+	/**
+	 * Handles the form submission.
+	 * 
+	 * @param {Event} event - The form submission event.
+	 * @returns {Promise<void>}
+	 */
+	async function handleSubmit(event) {
 		event.preventDefault();
 		uploading = true;
 
-		const form = event.target as HTMLFormElement;
-		const rawData = new FormData(form);
+		// @ts-ignore
+		const rawData = new FormData(event.target);
 
 		// Add missing parameter to the form data
 		rawData.append('browserId', (await getBrowserFingerprint()));
@@ -36,28 +62,34 @@
 
 		// Parse the csv file and send this up as a string
 		let file = rawData.get('file');
-		let contents = await readAsText(file as Blob);
+		// @ts-ignore
+		let contents = await readAsText(file);
 		rawData.append('fileStr', contents);
 
 		// Convert the form data into an internal format
-		let formData: UploadFormData = {
-			fileStr: rawData.get("fileStr") as string,
-			filename: rawData.get("file")?.toString() as string,
-			captchaResult: parseInt(rawData.get("captchaResult") as string),
-			captchaId: rawData.get("captchaId") as string,
-			fullname:rawData.get("fullname") as string,
-			email: rawData.get("email") as string,
-			organisation: rawData.get("organisation") as string,
-			browserId: rawData.get("browserId") as string,
-			ipAddress: rawData.get("ipAddress") as string,
+		// @ts-ignore
+		let formData = {
+			fileStr: rawData.get("fileStr"),
+			filename: rawData.get("file")?.toString(),
+			// @ts-ignore
+			captchaResult: parseInt(rawData.get("captchaResult")?? "0"),
+			captchaId: rawData.get("captchaId"),
+			fullname:rawData.get("fullname"),
+			email: rawData.get("email"),
+			organisation: rawData.get("organisation"),
+			browserId: rawData.get("browserId"),
+			ipAddress: rawData.get("ipAddress"),
 		};
 
 		// First validate the captcha
-		let validateResponse: ValidateResponse;
+		// @ts-ignore
+		let validateResponse;
 		try {			
 			validateResponse = await validateCaptcha({
+				// @ts-ignore
 				captchaId: formData.captchaId,
 				captchaResult: formData.captchaResult,
+				// @ts-ignore
 				browserFingerprintHash: formData.browserId,
 			});
 		} catch (error) {
@@ -74,6 +106,7 @@
 
 		// Now validate the file
 		try {
+			// @ts-ignore
 			validateFileHeaders(formData.fileStr);
 		} catch (error) {
 			formFailure = {
@@ -89,6 +122,7 @@
 
 		// Finally, upload the form
 		try {
+			// @ts-ignore
 			let analysisUrl = await handleUpload(formData, validateResponse);
 			formUploaded = true;
 			location.href = analysisUrl;
@@ -192,7 +226,7 @@
 	</div>
 
 	<div class="relative mb-4">
-		<Captcha bind:captchaResult={captchaResult} bind:captchaId={captchaId} serverUrl="http://localhost:7071" />
+		<Captcha bind:captchaResult={captchaResult} bind:captchaId={captchaId} serverUrl={import.meta.env.VITE_PRPEL_GUARD_URL} />
 	</div>
 
 	<button
