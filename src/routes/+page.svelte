@@ -1,10 +1,9 @@
-<script lang="ts">
+<script>
 	import { assets } from '$app/paths';
 	import Privacy from '$lib/Privacy.svelte';
 	import UploadForm from '$lib/UploadForm.svelte';
 
 	let showModal = false;
-	let verified = false;
 
 	function toggleModal() {
 		showModal = !showModal;

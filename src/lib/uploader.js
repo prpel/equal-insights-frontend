@@ -1,8 +1,11 @@
-import type { UploadFormData, ValidateRequest, ValidateResponse, UploadRequest } from '$lib/types';
+// Assuming you have the JSDoc types for UploadFormData, ValidateRequest, ValidateResponse, and UploadRequest defined elsewhere, as they were in the previous conversion.
 
-
-export async function validateCaptcha(payload : ValidateRequest) : Promise<ValidateResponse> {
-
+/**
+ * Validates the captcha.
+ * @param {ValidateRequest} payload - The payload for captcha validation.
+ * @returns {Promise<ValidateResponse>} - The response from captcha validation.
+ */
+export async function validateCaptcha(payload) {
     // TODO: need to use an environment variable for the api url
     const response = await fetch(`http://localhost:7071/api/validate`, {
         method: "POST",
@@ -16,7 +19,12 @@ export async function validateCaptcha(payload : ValidateRequest) : Promise<Valid
     }
 }
 
-export function validateFileHeaders(fileStr: string) {
+/**
+ * Validates the headers of a file.
+ * @param {string} fileStr - The file content as a string.
+ * @throws Will throw an error if the file does not contain the required headers.
+ */
+export function validateFileHeaders(fileStr) {
     const requiredHeaders = [
         'firstname',
         'surname',
@@ -39,10 +47,15 @@ export function validateFileHeaders(fileStr: string) {
     }
 }
 
-export async function handleUpload(formData: UploadFormData, validateResponse: ValidateResponse) : Promise<string> {
-
-    // Finally we can make the api call to the analysis function
-    const payload: UploadRequest = {
+/**
+ * Handles the upload of form data.
+ * @param {UploadFormData} formData - The form data to upload.
+ * @param {ValidateResponse} validateResponse - The response from captcha validation.
+ * @returns {Promise<string>} - The URL for analysis.
+ */
+export async function handleUpload(formData, validateResponse) {
+    // Constructing the payload for the upload request
+    const payload = {
         emailAddress: formData.email,
         organisation: formData.organisation,
         fullName: formData.fullname,
