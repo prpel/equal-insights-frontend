@@ -6,34 +6,34 @@ on:
 
 jobs:
   build_site:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout
-    uses: actions/checkout@v3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+      uses: actions/checkout@v3
 
-    - name: Install Node.js
-    uses: actions/setup-node@v3
-    with:
-      node-version: 18
-      cache: npm
+      - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: npm
 
-    - name: Install dependencies
-    run: npm install
+      - name: Install dependencies
+      run: npm install
 
-    - name: build
-    env:
-      BASE_PATH: '/equal-insights-frontend'
-      VITE_API_URL: ''
-      VITE_PRPEL_GUARD_URL: 'https://guard.prpel.co.uk'
-    run: |
-      npm run build
-      touch build/.nojekyll
+      - name: build
+      env:
+        BASE_PATH: '/equal-insights-frontend'
+        VITE_API_URL: ''
+        VITE_PRPEL_GUARD_URL: 'https://guard.prpel.co.uk'
+      run: |
+        npm run build
+        touch build/.nojekyll
 
-    - name: Upload Artifacts
-    uses: actions/upload-pages-artifact@v1
-    with:
-      # this should match the `pages` option in your adapter-static options
-      path: 'build/'
+      - name: Upload Artifacts
+      uses: actions/upload-pages-artifact@v1
+      with:
+        # this should match the `pages` option in your adapter-static options
+        path: 'build/'
 
   deploy:
   needs: build_site
