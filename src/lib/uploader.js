@@ -7,7 +7,7 @@
  */
 export async function validateCaptcha(payload) {
     // TODO: need to use an environment variable for the api url
-    const response = await fetch(`http://localhost:7071/api/validate`, {
+    const response = await fetch(`${import.meta.env.VITE_PRPEL_GUARD_URL}/api/validate`, {
         method: "POST",
         body: JSON.stringify(payload),
     });
@@ -67,7 +67,7 @@ export async function handleUpload(formData, validateResponse) {
     let analysisUrl = "/analysis/";
 
     // TODO: need to use an environment variable for the api url
-    const response = await fetch(`http://localhost:7072/api/upload`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/upload`, {
         method: "POST",
         headers: {
             "Authorization": `${validateResponse.tokenType} ${validateResponse.accessToken}`,

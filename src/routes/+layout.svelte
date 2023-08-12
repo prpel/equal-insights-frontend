@@ -1,6 +1,8 @@
 <script>
 	import { assets } from '$app/paths';
 	import '../app.css';
+	export const trailingSlash = 'always';
+	export const prerender = true;
 </script>
 
 <header class="shadow-md shadow-gray-400 w-full h-28">
